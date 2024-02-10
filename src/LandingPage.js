@@ -51,6 +51,8 @@ const LandingPage = () => {
                 </p>
             </div>
             </div>
+
+            
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <img
                 src="/src/images/singlerooms.jpg"
