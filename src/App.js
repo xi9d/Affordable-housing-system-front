@@ -1,9 +1,10 @@
+import BrowsePropertiesPage from "./BrowsePropertiesPage";
 import LandingPage from "./LandingPage";
 
 function App() {
   return (
     <div className="App">
-     <LandingPage/>
+     <BrowsePropertiesPage/>
     </div>
   );
 }
