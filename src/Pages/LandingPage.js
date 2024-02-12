@@ -1,6 +1,4 @@
 import React from 'react';
-import BrowsePropertiesPage from './BrowsePropertiesPage';
-
 
 const LandingPage = () => {
   const handleNavigation = () =>{
