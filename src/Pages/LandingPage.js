@@ -1,6 +1,9 @@
 import React from 'react';
 
 const LandingPage = () => {
+  const handleNavigation = () =>{
+    
+  };
   return (
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-blue-900 text-white shadow-lg">
@@ -124,6 +127,7 @@ const LandingPage = () => {
           </p>
           <button className="bg-blue-900 text-white px-8 py-4 mt-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300">
             Browse Properties
+            
           </button>
         </section>
       </main>
