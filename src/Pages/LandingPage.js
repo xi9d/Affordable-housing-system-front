@@ -122,7 +122,6 @@ const LandingPage = () => {
           </p>
           <button className="bg-blue-900 text-white px-8 py-4 mt-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300">
             Browse Available Plots
-            
           </button>
         </section>
       </main>
