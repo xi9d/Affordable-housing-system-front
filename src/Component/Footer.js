@@ -10,7 +10,7 @@ function Footer() {
             Twitter
           </a>
           <a href="#" className="text-gray-300 hover:text-white transition duration-300">
-            Facebook
+            Pauls Facebook
           </a>
           <a href="#" className="text-gray-300 hover:text-white transition duration-300">
             Instagram
