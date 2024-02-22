@@ -1,21 +1,17 @@
 import React from 'react';
 import SingleRoom from '../Images/singlerooms.jpg';
 import BedSitter from '../Images/bedsitter.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+ const naviagate = useNavigate();
+  const handleAvailablePlots = ()=>{
+    naviagate('/main');
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <header className="bg-blue-900 text-white shadow-lg">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-2xl font-semibold">
-            Affordable House Hunting System
-          </h1>
-          <p className="mt-2 text-base">
-            Find your ideal home in Kenya with ease.
-          </p>
-        </div>
-      </header>
+      
       <main className="container mx-auto px-4 py-8">
         <section className="mb-12">
           <h2 className="text-xl font-semibold text-gray-800 mb-6">
@@ -120,7 +116,8 @@ const LandingPage = () => {
           <p className="text-gray-600 text-base">
             Start your journey to finding the perfect home now. We provice you with a wide range of houses spread across the country.
           </p>
-          <button className="bg-blue-900 text-white px-8 py-4 mt-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300">
+          <button className="bg-blue-900 text-white px-8 py-4 mt-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300"
+          onClick={() =>handleAvailablePlots()}>
             Browse Available Plots
           </button>
         </section>

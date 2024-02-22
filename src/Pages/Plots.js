@@ -1,47 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 
-function Plots() {
-  const [plots, setPlots] = useState([]);
-  const [loading, setLoading] = useState(true);
+function Plots({ plots, loading }) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPlots, setFilteredPlots] = useState([]);
+  const [filterCriteria, setFilterCriteria] = useState(''); // New state for filter criteria
 
-  /*useEffect(() => {
-    const fetchPlots = async () => {
-      try {
-        const response = await axios.get('/api/plots'); // Assuming you have an API endpoint for fetching plots
-        setPlots(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching plots:', error);
-      }
-    };
-    fetchPlots();
-  }, []);*/
+  // Function to handle search query change
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    filterPlots(e.target.value);
+  };
 
- /* if (!loading) {
+  // Function to handle filter button click
+  const handleFilterClick = (criteria) => {
+    setFilterCriteria(criteria);
+    filterPlots(searchQuery, criteria);
+  };
+
+  // Function to filter plots based on search query and filter criteria
+  const filterPlots = (query, criteria) => {
+    let filtered = plots.filter((plot) =>
+      plot.nameOfPlot.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (criteria) {
+      filtered = filtered.filter((plot) => plot.roomType === criteria);
+    }
+
+    setFilteredPlots(filtered);
+  };
+
+  const plotsToDisplay = searchQuery || filterCriteria ? filteredPlots : plots;
+
+  if (loading) {
     return <div>Loading...</div>;
-  }*/
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-semibold mb-6">Available Plots</h1>
+      <div className="mb-4 relative">
+  <input
+    type="text"
+    placeholder="Search plots..."
+    value={searchQuery}
+    onChange={handleSearchChange}
+    className="block w-full px-4 py-2 border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+  />
+  <button className="absolute inset-y-0 right-0 px-4 py-2 bg-indigo-500 text-white rounded-r-lg focus:outline-none hover:bg-indigo-600">
+    Search
+  </button>
+</div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {plots.map((plot) => (
+        {plotsToDisplay.map((plot) => (
           <div key={plot.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img
-              src={plot.image} // Assuming you have an image URL for each plot
-              alt={plot.nameOfPlot}
-              className="w-full h-64 object-cover"
-            />
             <div className="p-6">
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{plot.nameOfPlot}</h3>
-              <p className="text-gray-600">{plot.description}</p>
               <p className="mt-2 text-gray-800">Location: {plot.location}</p>
               <p className="text-gray-800">Price: {plot.price}</p>
               <p className="text-gray-800">Room Type: {plot.roomType}</p>
               <p className="text-gray-800">Availability: {plot.availability}</p>
-              <Link to={`/viewplot/${plot.id}`} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 inline-block">View Plot</Link>
+              <p className="text-gray-800">Rate: {plot.rate}</p>
             </div>
           </div>
         ))}
