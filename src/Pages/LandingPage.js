@@ -122,6 +122,70 @@ const LandingPage = () => {
           </button>
         </section>
       </main>
+      
+      {/* Pricing Section */}
+      <section className="bg-gray-100 py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">Choose Your Plan</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Free Tier */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+              <div className="p-8">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Basic</h3>
+                <p className="text-gray-600 mb-6">Basic features to get started:</p>
+                <ul className="text-gray-600 mb-6 list-disc pl-6">
+                  <li>View available properties</li>
+                  <li>Filter properties</li>
+                  <li>Contact landlords</li>
+                </ul>
+                <div className="flex items-center justify-between mb-6">
+                  <p className="text-gray-600 font-semibold">Price: Free</p>
+                </div>
+                <button className="bg-blue-900 text-white px-8 py-3 rounded-lg shadow-md hover:bg-blue-800 transition duration-300 block w-full">Get Started</button>
+              </div>
+            </div>
+
+            {/* Standard Tier */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+              <div className="p-8">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Standard</h3>
+                <p className="text-gray-600 mb-6">More features for regular users:</p>
+                <ul className="text-gray-600 mb-6 list-disc pl-6">
+                  <li>All Basic Tier features</li>
+                  <li>Save favorite properties</li>
+                  <li>Advanced filtering options</li>
+                  <li>Email notifications for new properties</li>
+                </ul>
+                <div className="flex items-center justify-between mb-6">
+                  <p className="text-gray-600 font-semibold">Price: Ksh 500 per month</p>
+                </div>
+                <button className="bg-blue-900 text-white px-8 py-3 rounded-lg shadow-md hover:bg-blue-800 transition duration-300 block w-full">Get Started</button>
+              </div>
+            </div>
+
+            {/* Premium Tier */}
+            <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+              <div className="p-8">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Premium</h3>
+                <p className="text-gray-600 mb-6">Top-notch features for power users:</p>
+                <ul className="text-gray-600 mb-6 list-disc pl-6">
+                  <li>All Standard Tier features</li>
+                  <li>Priority customer support</li>
+                  <li>Access to exclusive properties</li>
+                  <li>Personalized property recommendations</li>
+                </ul>
+                <div className="flex items-center justify-between mb-6">
+                  <p className="text-gray-600 font-semibold">Price: Ksh 1000 per month</p>
+                </div>
+                <button className="bg-blue-900 text-white px-8 py-3 rounded-lg shadow-md hover:bg-blue-800 transition duration-300 block w-full">Get Started</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
     </div>
   );
 };
