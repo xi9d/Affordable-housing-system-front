@@ -19,8 +19,6 @@ try {
 useEffect(() => {
   fetchPlots();
 }, []);
-
-
   return (
     <div>
         <Plots plots={plots} loading={loading}/>

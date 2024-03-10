@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Jawabu",
+  "name": "Find your ideal rental using our real time data",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,6 +16,16 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "Logo.png",
+      "type": "image/png",
+      "sizes": "1608x1663"
+    },
+    {
+      "src": "Logo2.png",
+      "type": "image/png",
+      "sizes": "1608x1663"
     }
   ],
   "start_url": ".",
