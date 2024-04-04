@@ -8,12 +8,17 @@ function Plots({ plots, loading }) {
 
     const handleViewPlot = (plotId) => {
         const selectedPlot = plots.find((item) => item.id === plotId);
-        navigate('/viewplot/'+plotId, { state: { plot: selectedPlot } });
+        if (selectedPlot) {
+            navigate(`/view-plot?id=${plotId}`, { state: { viewPlot: selectedPlot } });
+        } else {
+            console.error("Selected plot not found.");
+        }
     };
 
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-200 text-white hover:cursor-progress">
+
                 <div className="flex space-x-4 animate-pulse">
                     <img src={Logo} alt="Jawabu rentals" className="w-full h-64"/>
                 </div>
@@ -22,58 +27,49 @@ function Plots({ plots, loading }) {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <aside className="col-span-3 md:col-span-1">
-                <div className="bg-gray-100 rounded-lg shadow-md p-6">
-                    <h2 className="text-lg font-semibold mb-4">Filter Options</h2>
-                    <div className="mb-4">
-                        <label htmlFor="roomType" className="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
-                        <select id="roomType" className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50">
-                            <option value="">Select Room Type</option>
-                            <option value="single room">Single Room</option>
-                            <option value="bedsitter">BedSitter</option>
-                            <option value="double room">Double room</option>
-                            <option value="double room">One Bedroom</option>
-                            <option value="double room">Two Bedroom</option>
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                        <select id="location" className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50">
-                            <option value="">Select Location</option>
-                            <option value="Nairobi">Nairobi</option>
-                            <option value="Mombasa">Mombasa</option>
-                            <option value="Kisumu">Kisumu</option>
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="priceRange" className="block text-sm font-medium text-gray-700 mb-1">Price Range: Ksh{priceRangeValue}</label>
-                        <input type="range" id="priceRange" min="500" max="100000" step="1000" value={priceRangeValue} onChange={(e) => setPriceRangeValue(e.target.value)} className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50"/>
-                    </div>
-                </div>
-            </aside>
-            <div className="col-span-3 md:col-span-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {plots.map((plot) => (
-                        <div key={plot.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                            <div className="p-6">
-                                <img
-                                    src={`data:image/png;base64,${plot.image}`}
-                                    alt="Product"
-                                    className="w-full h-64 object-cover rounded-md hover:scale-125 hover:transition duration-500 ease-in-out cursor-pointer"
-                                    onClick={() => handleViewPlot(plot.id)}
-                                />
-                                <h3 className="text-xl font-semibold cursor-pointer text-gray-800 mb-2" onClick={() => handleViewPlot(plot.id)}>{plot.name}</h3>
-                                <p className="mt-2 text-gray-800">Location: {plot.location}</p>
-                                <p className="text-gray-800">Price: {plot.price}</p>
-                                <p className="text-gray-800">Room Type: {plot.roomType}</p>
-                                <p className="text-gray-800">Availability: {plot.availability}</p>
-                            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
+            {plots.map((plot) => (
+                <div key={plot.id} className="border-2 rounded-sm shadow-sm bg-white hover:shadow-lg overflow-hidden">
+                    <div className="relative">
+                        <div
+                            className={`absolute top-0 right-0 ${
+                                plot.availability === "VACANCY_UNAVAILABLE" ? "bg-red-400" : "bg-green-400"
+                            } text-white text-center py-1 px-2 font-semibold transform z-10`}
+                            style={{ transformOrigin: "top right" }}
+                        >
+                            {plot.availability === "VACANCY_UNAVAILABLE" ? "Unavailable" : "Available"}
                         </div>
-                    ))}
+                        <img
+                            src={plot.image ? `data:image/png;base64,${plot.image}` : Logo}
+                            alt={plot.name}
+                            className="w-full h-48 object-cover"
+                            loading="lazy"
+                        />
+                    </div>
+                    <div className="p-4">
+                        <h3 className="font-bold mb-2 text-slate-700 text-2xl">{plot.name}</h3>
+                        <p className="text-slate-700 mb-2">{plot.location}</p>
+                        <div className="flex items-center mb-2">
+                            <p className="font-bold">{plot.roomType}</p>
+                        </div>
+                        <p className="text-slate-700 mb-2">
+                            {plot.description.length > 100 ? `${plot.description.slice(0, 100)}...` : plot.description}
+                        </p>
+                    </div>
+                    <div className="p-4">
+                        <p className="font-semibold text-slate-800 text-center capitalize">Ksh {parseInt(plot.price, 10).toLocaleString("en-US")}</p>
+                        <button
+                            type="button"
+                            className="px-2 py-1 rounded-sm bg-slate-700 hover:bg-slate-800 text-white font-bold mt-2 w-full"
+                            onClick={() => handleViewPlot(plot.id)}
+                        >
+                            Learn More
+                        </button>
+                    </div>
                 </div>
-            </div>
+            ))}
         </div>
+
     );
 }
 

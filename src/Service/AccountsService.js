@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const BASE_URL = "http://localhost:8080/api";
 
 class AccountService {
@@ -8,7 +7,16 @@ class AccountService {
             const response = await axios.post(`${BASE_URL}/client/auth/register`, client);
             return response.data;
         } catch (error) {
-            throw error;
+            throw new Error(`Error registering client: ${error.message}`);
+        }
+    }
+
+    static async registerPlotOwner(plotOwner) {
+        try {
+            const response = await axios.post(`${BASE_URL}/plot-owner/auth/register`, plotOwner);
+            return response.data;
+        } catch (error) {
+            throw new Error(`Error registering plot owner: ${error.message}`);
         }
     }
 
@@ -18,27 +26,30 @@ class AccountService {
             const response = await axios.post(`${BASE_URL}/${endpoint}`, { email, password });
             const decodedToken = parseJwt(response.data.token);
             sessionStorage.setItem("token", response.data.token);
-            localStorage.setItem("token", response.data.token)
-            sessionStorage.setItem("authorities", decodedToken.authorities);
+            sessionStorage.setItem("role", decodedToken.role);
             sessionStorage.setItem("id", decodedToken.id);
-            sessionStorage.setItem("userName", decodedToken.userName);
+            sessionStorage.setItem("username", decodedToken.name);
             const expiration = decodedToken.exp * 1000;
             const logoutTimeout = expiration - Date.now();
-            console.log("logout timeout", logoutTimeout);
             setTimeout(logout, logoutTimeout);
+
             return decodedToken.sub;
         } catch (error) {
-            throw error;
+            throw new Error(`Authentication failed: ${error.message}`);
         }
     }
 
-    static async registerPlotOwner(plotOwner) {
-        try {
-            const response = await axios.post(`${BASE_URL}/plot-owner/auth/register`, plotOwner);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
+    static editPlotOwner(name, email, password, telephone) {
+        return undefined;
+    }
+
+    static editAdmin(name, email, password, telephone) {
+        return undefined;
+    }
+
+    static editClient(name, email, password, telephone) {
+
+        return null;
     }
 }
 
@@ -46,17 +57,16 @@ export const logout = async () => {
     try {
         await axios.post(`${BASE_URL}/logout`, {});
         sessionStorage.removeItem("token");
-        sessionStorage.removeItem("authorities");
+        sessionStorage.removeItem("role");
         sessionStorage.removeItem("id");
-        sessionStorage.removeItem("userName");
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("username");
+       sessionStorage.removeItem("model");
     } catch (error) {
         console.error('Error logging out', error);
-        throw error;
+        throw new Error(`Error logging out: ${error.message}`);
     }
 };
 
-// Helper function to decode JWT token
 function parseJwt(token) {
     try {
         const base64Url = token.split('.')[1];
@@ -65,7 +75,7 @@ function parseJwt(token) {
         return JSON.parse(jsonPayload);
     } catch (error) {
         console.error("Error decoding JWT token", error);
-        throw error;
+        throw new Error(`Error decoding JWT token: ${error.message}`);
     }
 }
 
